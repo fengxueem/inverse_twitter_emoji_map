@@ -3,7 +3,6 @@ var router = express.Router();
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/streaming_db_v');
-var echarts = require('echarts');
 var moment = require('moment');
 var co = require('co');
 
