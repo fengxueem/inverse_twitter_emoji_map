@@ -391,8 +391,7 @@ function* getCountriesTweets(start, end, callback) {
                 if (result[0].posValue != 0) {
                     final[i].value = (result[0].negValue) / (result[0].posValue);
                 } else {
-                    // if no positive posts, then enlarge the negValue by 100 times.
-                    final[i].value = result[0].negValue * 100;
+                    final[i].value = result[0].negValue;
                 }
                 console.log(final[i].value);
             }
@@ -414,9 +413,15 @@ router.get('/', function(req, res, next) {
     var startTime = getTimeInterval(req.query.start);
     var endTime = getTimeInterval(req.query.end);
     console.log(startTime + " -> " + endTime);
-    // start counting tweets during this period and send data when finished
-    co(getCountriesTweets(startTime, endTime, function(data) {
-        res.send(final);
+    // start counting tweets during this period and send final and the max value of final when finished
+    co(getCountriesTweets(startTime, endTime, function(final) {
+        var max = 1;
+        final.forEach(function(element, index) {
+            if (max < Number(element.value)) {
+                max = Number(element.value);
+            }
+        });
+        res.send({'final': final, 'max': max});
     }));
 });
 

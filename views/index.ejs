@@ -79,7 +79,6 @@
                     emphasis: { label: { show: true } }
                 },
                 data: []
-
             }]
         };
         if (option && typeof option === "object") {
@@ -111,8 +110,11 @@
         $("#get-countries-data").click(function() {
             $.get("http://localhost:3000/countries", { start: startTime, end: endTime }, function(data) {
                 myChart.setOption({
+                    visualMap: {
+                        max: data['max']
+                    },
                     series: [{
-                        data: data
+                        data: data['final']
                     }]
                 });
             });
