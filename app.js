@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var countries = require('./routes/countries');
 
-// save tweets
+// save last 1000000 tweets
 var mdb = require('./models/mongodbTweets');
 mdb.saveTweets();
 
